@@ -28,5 +28,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="read"
+        android:layout_below="@id/ButtonToGen"
+        />
+    <Button
+        android:id="@+id/ButtonToRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="route"
+        android:layout_below="@id/ButtonToRead"
         />
 </RelativeLayout>

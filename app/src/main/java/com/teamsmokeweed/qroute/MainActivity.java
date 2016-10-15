@@ -11,7 +11,7 @@ import com.teamsmokeweed.qroute.readqr.ReadActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonToGen, buttonToRead;
+    private Button buttonToGen, buttonToRead, buttonToRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonToRoute = (Button) findViewById(R.id.ButtonToRoute);
+        buttonToRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RouteMap.class);
+                //i.putExtra("sendTextStr",sendText.getText().toString() );
+                startActivity(i);
+            }
+        });
 
     }
 }
