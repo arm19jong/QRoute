@@ -95,4 +95,12 @@
         android:layout_below="@id/latLng"
         />
 
+    <Button
+        android:id="@+id/route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Route"
+        android:layout_below="@id/webPage_ans"
+        />
+
 </RelativeLayout>

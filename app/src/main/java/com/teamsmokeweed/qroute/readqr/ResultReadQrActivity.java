@@ -3,13 +3,19 @@ package com.teamsmokeweed.qroute.readqr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.RouteMap;
 import com.teamsmokeweed.qroute.genqr.DateQr;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by jongzazaal on 15/10/2559.
@@ -18,6 +24,7 @@ import com.teamsmokeweed.qroute.genqr.DateQr;
 public class ResultReadQrActivity  extends AppCompatActivity {
 
 
+    private Button route;
     private TextView titles, placeName, placeType, des, latLng, webPage;
     String[] sQr;
     DateQr dateQr;
@@ -33,6 +40,7 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         des = (TextView) findViewById(R.id.des_ans);
         latLng = (TextView) findViewById(R.id.latLng_ans);
         webPage = (TextView) findViewById(R.id.webPage_ans);
+        route = (Button) findViewById(R.id.route);
 
 
         Intent i = getIntent();
@@ -40,6 +48,17 @@ public class ResultReadQrActivity  extends AppCompatActivity {
 
         setDateQr();
         showData();
+
+        route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ist<Float> latLng = Arrays.asList(dateQr.getLat(), dateQr.getLng());
+                Intent i = new Intent(getApplicationContext(), RouteMap.class);
+                i.putExtra("lat", dateQr.getLat());
+                i.putExtra("lng", dateQr.getLng());
+                startActivity(i);
+            }
+        });
 
     }
 

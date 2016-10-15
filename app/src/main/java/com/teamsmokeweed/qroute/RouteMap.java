@@ -2,6 +2,7 @@ package com.teamsmokeweed.qroute;
 
 import android.Manifest;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +44,7 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
     GoogleMap mMap;
     GoogleMap googleMap;
     int check_navi;
+    LatLng latLng;
 
     //FragmentTransaction fragmentTransaction;
 
@@ -49,13 +52,17 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_map);
+
+        Intent i = getIntent();
+        //Float a = i.getFloatExtra("lat", 2);
+        latLng = new LatLng(i.getFloatExtra("lat", 1), i.getFloatExtra("lng", 1));
+        check_navi = 0;
+
         MapFragment mapFragment = MapFragment.newInstance();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_map_container, mapFragment);
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
-
-        check_navi = 0;
 
 
 //        mMap = ((SupportMapFragment)getSupportFragmentManager()
@@ -99,7 +106,8 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
         check_navi += n;
         String serverKey = "AIzaSyB-bqxEbBrz8S_l9V3i57Xlu8WmHgK5umE";
         final LatLng origin = ori;
-        final LatLng destination = new LatLng(13.728069, 100.774635);
+        //final LatLng destination = new LatLng(13.728069, 100.774635);
+        final LatLng destination = latLng;
         GoogleDirection.withServerKey(serverKey)
                 .from(origin)
                 .to(destination)
@@ -158,7 +166,7 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
             return;
         }
         LocationAvailability locationAvailability = LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient);
-        if(locationAvailability.isLocationAvailable()) {
+        if (locationAvailability.isLocationAvailable()) {
             LocationRequest locationRequest = new LocationRequest()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(5000);
@@ -191,7 +199,7 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
 
         //showToast("lat: "+lat+" Lng: "+lng);
 //
-        if(mMarker != null)
+        if (mMarker != null)
             mMarker.remove();
 
 
@@ -201,6 +209,16 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
 //                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
 //                );
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         googleMap.setMyLocationEnabled(true);
 
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(

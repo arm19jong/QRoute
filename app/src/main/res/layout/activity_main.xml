@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="read"
         android:layout_below="@id/ButtonToGen"
+        android:layout_centerHorizontal="true"
         />
     <Button
         android:id="@+id/ButtonToRoute"
@@ -36,5 +37,6 @@
         android:layout_height="wrap_content"
         android:text="route"
         android:layout_below="@id/ButtonToRead"
+        android:visibility="gone"
         />
 </RelativeLayout>
