@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/titles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Title: "
+        />
+    <TextView
+        android:id="@+id/titles_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/titles"
+        android:hint="Sample"
+        />
+    <TextView
+        android:id="@+id/placeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Place name: "
+        android:layout_below="@id/titles"
+        />
+    <TextView
+        android:id="@+id/placeName_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/placeName"
+        android:hint="Sample"
+        android:layout_below="@id/titles"
+        />
+    <TextView
+        android:id="@+id/placeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Place type: "
+        android:layout_below="@id/placeName"
+        />
+    <TextView
+        android:id="@+id/placeType_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/placeType"
+        android:hint="Sample"
+        android:layout_below="@id/placeName"
+        />
+    <TextView
+        android:id="@+id/des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Description: "
+        android:layout_below="@id/placeType"
+        />
+    <TextView
+        android:id="@+id/des_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/des"
+        android:hint="Sample"
+        android:layout_below="@id/placeType"
+        />
+    <TextView
+        android:id="@+id/latLng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Latitude, Longitude: "
+        android:layout_below="@id/des"
+        />
+    <TextView
+        android:id="@+id/latLng_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/latLng"
+        android:hint="Sample"
+        android:layout_below="@id/des"
+        />
+
+    <TextView
+        android:id="@+id/webPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Web page URL: "
+        android:layout_below="@id/latLng"
+        />
+    <TextView
+        android:id="@+id/webPage_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/webPage"
+        android:hint="Sample"
+        android:layout_below="@id/latLng"
+        />
+
+</RelativeLayout>

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.genqr.DateQr;
 
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
@@ -66,6 +67,13 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
 
+        String[] sQr = rawResult.getText().split("#420#");
+        //String part1 = parts[0];
+
+        Intent i = new Intent(getApplicationContext(), ResultReadQrActivity.class);
+        i.putExtra("sQr", sQr);
+        startActivity(i);
+
         //String[] parts = rawResult.getText().split(":");
         //String part1 = parts[1]; // 004
 
@@ -75,13 +83,13 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
         // * Wait 2 seconds to resume the preview.
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
         // * I don't know why this is the case but I don't have the time to figure out.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.resumeCameraPreview(ReadActivity.this);
-            }
-        }, 2000);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mScannerView.resumeCameraPreview(ReadActivity.this);
+//            }
+//        }, 2000);
     }
 
     private static class CustomViewFinderView extends ViewFinderView {

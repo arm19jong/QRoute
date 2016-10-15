@@ -32,6 +32,7 @@
         <activity android:name=".genqr.GenQrActivity"></activity>
         <activity android:name=".readqr.ReadActivity"></activity>
         <activity android:name=".RouteMap"></activity>
+        <activity android:name=".readqr.ResultReadQrActivity"></activity>
 
 
         <meta-data
