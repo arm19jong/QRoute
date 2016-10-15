@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.teamsmokeweed.qroute.genqr.GenQrActivity;
+import com.teamsmokeweed.qroute.readqr.ReadActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonToGen;
+    private Button buttonToGen, buttonToRead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +26,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        buttonToRead = (Button) findViewById(R.id.ButtonToRead);
+        buttonToRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ReadActivity.class);
+                //i.putExtra("sendTextStr",sendText.getText().toString() );
+                startActivity(i);
+            }
+        });
+
+
     }
 }
