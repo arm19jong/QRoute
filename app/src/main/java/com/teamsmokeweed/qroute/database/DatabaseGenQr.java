@@ -21,6 +21,7 @@ public class DatabaseGenQr extends SQLiteOpenHelper {
     public static final String Col_placetype = "placetype";
     public static final String Col_titles = "titles";
     public static final String Col_des = "des";
+    public static final String Col_web = "web";
 
 
     public DatabaseGenQr(Context context) {super(context, TABLE_NAME, null, DB_VERSION);}
