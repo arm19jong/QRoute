@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.teamsmokeweed.qroute.database.ViewGenQr;
 import com.teamsmokeweed.qroute.genqr.GenQrActivity;
 import com.teamsmokeweed.qroute.readqr.ReadActivity;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         buttonToRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RouteMap.class);
+                Intent i = new Intent(getApplicationContext(), ViewGenQr.class);
                 //i.putExtra("sendTextStr",sendText.getText().toString() );
                 startActivity(i);
             }

@@ -19,6 +19,9 @@ public class DateQr {
     }
 
     public void setDes(String des) {
+        if (des.equals("")){
+            des = "-";
+        }
         this.des = des;
     }
 
@@ -27,6 +30,9 @@ public class DateQr {
     }
 
     public void setLat(Float lat) {
+        if (lat.equals("")){
+            lat = Float.valueOf(11);
+        }
         this.lat = lat;
     }
 
@@ -35,6 +41,10 @@ public class DateQr {
     }
 
     public void setLng(Float lng) {
+
+        if (lng.equals("")){
+            lng = Float.valueOf(12);
+        }
         this.lng = lng;
     }
 
@@ -43,6 +53,9 @@ public class DateQr {
     }
 
     public void setPlaceName(String placeName) {
+        if (placeName.equals("")){
+            placeName = "-";
+        }
         this.placeName = placeName;
     }
 
@@ -51,6 +64,9 @@ public class DateQr {
     }
 
     public void setPlaceType(String placeType) {
+        if (placeType.equals("")){
+            placeType = "-";
+        }
         this.placeType = placeType;
     }
 
@@ -59,6 +75,10 @@ public class DateQr {
     }
 
     public void setTitles(String titles) {
+
+        if (titles.equals("")){
+            titles = "-";
+        }
         this.titles = titles;
     }
 
@@ -67,6 +87,9 @@ public class DateQr {
     }
 
     public void setWebPage(String webPage) {
+        if (webPage.equals("")){
+            webPage = "-";
+        }
         this.webPage = webPage;
     }
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.database.AddDatabaseQr;
 
 /**
  * Created by jongzazaal on 14/10/2559.
@@ -59,6 +60,9 @@ public class GenQrActivity extends AppCompatActivity {
                 dateQr.setPlaceName(placeName.getText().toString());
                 dateQr.setPlaceType(placeType.getText().toString());
                 dateQr.setDes(des.getText().toString());
+                if (latLng.getText().toString().equals("")){
+                    latLng.setText("11, 12");
+                }
                 String[] sLatLng = latLng.getText().toString().split(",");
                 dateQr.setLat(Float.valueOf(sLatLng[0]));
                 dateQr.setLng(Float.valueOf(sLatLng[1]));
@@ -75,6 +79,8 @@ public class GenQrActivity extends AppCompatActivity {
                 try {
                     bitmap = qrCodeEncoder.encodeAsBitmap();
                     imgQrGen.setImageBitmap(bitmap);
+                    AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
+                    addDatabaseQr.addDb();
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }

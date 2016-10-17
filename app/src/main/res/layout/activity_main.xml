@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:text="route"
         android:layout_below="@id/ButtonToRead"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 </RelativeLayout>
