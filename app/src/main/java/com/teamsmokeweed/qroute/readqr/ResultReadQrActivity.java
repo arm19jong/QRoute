@@ -28,11 +28,17 @@ public class ResultReadQrActivity  extends AppCompatActivity {
     private TextView titles, placeName, placeType, des, latLng, webPage;
     String[] sQr;
     DateQr dateQr;
+    View decorView;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.result_read_qr);
+
+        decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
         titles = (TextView) findViewById(R.id.titles_ans);
         placeName = (TextView) findViewById(R.id.placeName_ans);
@@ -62,6 +68,7 @@ public class ResultReadQrActivity  extends AppCompatActivity {
 
     }
 
+
     private void setDateQr(){
         dateQr = new DateQr();
 
@@ -81,6 +88,19 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         des.setText(dateQr.getDes());
         latLng.setText(dateQr.getLat()+", "+dateQr.getLng());
         webPage.setText(dateQr.getWebPage());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
 

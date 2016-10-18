@@ -32,11 +32,18 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ReadActivity  extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     private ZXingScannerView mScannerView;
-
+    View decorView;
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.read_qr);
+
+        decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+
         //setupToolbar();
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this){@Override
@@ -46,7 +53,9 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
         contentFrame.addView(mScannerView);
 
 
+
     }
+
 
     @Override
     public void onResume() {
