@@ -39,7 +39,8 @@
         <activity android:name=".RouteMap"></activity>
         <activity android:name=".readqr.ResultReadQrActivity"></activity>
         <activity android:name=".database.ViewGenQr"></activity>
-        <activity android:name=".database.GenRecycleview"></activity>
+        <activity android:name=".database.GenRecycleviewActivity"></activity>
+        <activity android:name=".genqr.GenQr2Activity"></activity>
 
 
         <meta-data

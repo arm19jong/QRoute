@@ -113,10 +113,10 @@
                         android:textSize="24dp"
                         />
                     <TextView
-                        android:id="@+id/des"
+                        android:id="@+id/placeName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description bra~~~~ ~~~~~~~~"
+                        android:text="PlaceNameeee"
                         android:layout_below="@id/titles"
                         />
 
