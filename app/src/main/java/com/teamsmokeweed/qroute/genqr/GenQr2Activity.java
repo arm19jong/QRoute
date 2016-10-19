@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -30,7 +31,7 @@ public class GenQr2Activity extends AppCompatActivity {
 
     ImageView imageView;
     Bitmap bitmap;
-    Button saveButton;
+    Button saveButton, shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class GenQr2Activity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imgQrGen);
         saveButton = (Button) findViewById(R.id.save);
+        shareButton = (Button) findViewById(R.id.share);
 
         Intent i = getIntent();
         byte[] byteArray = getIntent().getByteArrayExtra("img");
@@ -77,6 +79,21 @@ public class GenQr2Activity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+            }
+        });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap b =bitmap;
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/png");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                b.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(),
+                        b, "Title", null);
+                Uri imageUri =  Uri.parse(path);
+                share.putExtra(Intent.EXTRA_STREAM, imageUri);
+                startActivity(Intent.createChooser(share, "Select"));
             }
         });
     }

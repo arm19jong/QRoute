@@ -1,20 +1,30 @@
 package com.teamsmokeweed.qroute.readqr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 import com.teamsmokeweed.qroute.R;
 import com.teamsmokeweed.qroute.RouteMap;
 import com.teamsmokeweed.qroute.database.AddDatabaseQr;
+import com.teamsmokeweed.qroute.genqr.Contents;
 import com.teamsmokeweed.qroute.genqr.DateQr;
+import com.teamsmokeweed.qroute.genqr.GenQr2Activity;
+import com.teamsmokeweed.qroute.genqr.QRCodeEncoder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +35,7 @@ import java.util.List;
 public class ResultReadQrActivity  extends AppCompatActivity {
 
 
-    private Button route;
+    private Button route, reGenQr;
     private TextView titles, placeName, placeType, des, latLng, webPage;
     String[] sQr;
     DateQr dateQr;
@@ -43,6 +53,7 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         latLng = (TextView) findViewById(R.id.latLng_ans);
         webPage = (TextView) findViewById(R.id.webPage_ans);
         route = (Button) findViewById(R.id.route);
+        reGenQr = (Button) findViewById(R.id.reGenQr);
 
 
         Intent i = getIntent();
@@ -60,6 +71,47 @@ public class ResultReadQrActivity  extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), RouteMap.class);
                 i.putExtra("lat", dateQr.getLat());
                 i.putExtra("lng", dateQr.getLng());
+                startActivity(i);
+            }
+        });
+
+        reGenQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Find screen size
+                WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                Display display = manager.getDefaultDisplay();
+                Point point = new Point();
+                display.getSize(point);
+                int width = point.x;
+                int height = point.y;
+                int smallerDimension = width < height ? width : height;
+                smallerDimension = smallerDimension * 3 / 4;
+
+
+                String sQr = dateQr.getsQr();
+                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(sQr,
+                        null,
+                        Contents.Type.TEXT,
+                        BarcodeFormat.QR_CODE.toString(),
+                        smallerDimension);
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = qrCodeEncoder.encodeAsBitmap();
+                    //imgQrGen.setImageBitmap(bitmap);
+                    //AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
+                    //addDatabaseQr.addDb();
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                Intent i = new Intent(getApplicationContext(), GenQr2Activity.class);
+                i.putExtra("img",byteArray);
                 startActivity(i);
             }
         });

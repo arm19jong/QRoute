@@ -104,5 +104,12 @@
         android:text="Route"
         android:layout_below="@id/webPage_ans"
         />
+    <Button
+        android:id="@+id/reGenQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/route"
+        android:text="Regen"
+        />
 
 </RelativeLayout>
