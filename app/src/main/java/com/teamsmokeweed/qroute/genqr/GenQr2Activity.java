@@ -12,6 +12,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.teamsmokeweed.qroute.R;
@@ -30,9 +31,8 @@ import java.util.Date;
 public class GenQr2Activity extends AppCompatActivity {
 
     ImageView imageView;
-    Bitmap bitmap;
     Button saveButton, shareButton;
-
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +40,21 @@ public class GenQr2Activity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imgQrGen);
         saveButton = (Button) findViewById(R.id.save);
-        shareButton = (Button) findViewById(R.id.share);
+        shareButton = (Button) findViewById(R.id.shareB);
 
         Intent i = getIntent();
-        byte[] byteArray = getIntent().getByteArrayExtra("img");
-        bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        final byte[] byteArray = getIntent().getByteArrayExtra("img");
+
+       bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imageView.setImageBitmap(bitmap);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
                 try {
                     // Save bitmap to storage
+
                     Date d = new Date();
                     String filename  = (String) DateFormat.format("hhmmss-MMddyyyy"
                             , d.getTime());
@@ -59,6 +62,9 @@ public class GenQr2Activity extends AppCompatActivity {
                             , "/Pictures/" + filename + ".png");
                     FileOutputStream out = new FileOutputStream(dir);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                    bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     out.write(bos.toByteArray());
 
@@ -70,6 +76,7 @@ public class GenQr2Activity extends AppCompatActivity {
                             new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     intent.setData(Uri.fromFile(dir));
                     sendBroadcast(intent);
+                    out.close();
 
                     Toast.makeText(getApplicationContext(), "Saved!"
                             , Toast.LENGTH_SHORT).show();
@@ -84,10 +91,11 @@ public class GenQr2Activity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap b =bitmap;
+                Bitmap b = bitmap;
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/png");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                b = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 b.compress(Bitmap.CompressFormat.PNG, 100, bytes);
                 String path = MediaStore.Images.Media.insertImage(getContentResolver(),
                         b, "Title", null);
