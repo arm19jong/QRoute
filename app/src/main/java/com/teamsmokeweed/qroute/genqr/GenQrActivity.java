@@ -4,8 +4,11 @@ import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -33,7 +37,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.squareup.otto.Subscribe;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.bar.App;
+import com.teamsmokeweed.qroute.bar.BlackButtonClicked;
+import com.teamsmokeweed.qroute.bar.DoneButtonClicked;
 import com.teamsmokeweed.qroute.database.AddDatabaseQr;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +54,7 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Button buttonGen;
+            ImageButton currentLocationButton;
     private EditText titles, placeName, placeType, des, latLng, webPage;
     private ImageView imgQrGen;
     private String s;
@@ -53,10 +62,11 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     private GoogleApiClient googleApiClient;
     double lat, lng;
     Marker mMarker;
-    GoogleMap mMap;
+    //GoogleMap mMap;
     GoogleMap googleMap;
-    int check_navi;
-    LatLng latLngs;
+    //int check_navi;
+    //LatLng latLngs;
+    boolean currentLocationclick;
 
 
     @Override
@@ -73,9 +83,11 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         latLng = (EditText) findViewById(R.id.latLng);
         webPage = (EditText) findViewById(R.id.webPage);
         imgQrGen = (ImageView) findViewById(R.id.imgQrGen);
+        currentLocationButton = (ImageButton) findViewById(R.id.currentLocation);
+        currentLocationclick = false;
+
 
         final DateQr dateQr = new DateQr();
-
         buttonGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +123,7 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                 Bitmap bitmap = null;
                 try {
                     bitmap = qrCodeEncoder.encodeAsBitmap();
-                    imgQrGen.setImageBitmap(bitmap);
+                    //imgQrGen.setImageBitmap(bitmap);
                     AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
                     addDatabaseQr.addDb();
                 } catch (WriterException e) {
@@ -127,6 +139,29 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                 startActivity(i);
 
 
+            }
+        });
+
+        currentLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentLocationclick = !currentLocationclick;
+                if (currentLocationclick == true){
+                    //latLng.setVisibility(View.INVISIBLE);
+                    //latLng.
+                    latLng.setText(lat+", "+lng);
+                   // currentLocationButton.setColorFilter(getResources().getColor(R.color.colorPrimaryDark));
+                    //currentLocationButton.setColorFilter(Color.rgb(0,0,50));
+                    //currentLocationButton.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
+                    //currentLocationButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps_blue);
+                }
+                else{
+                    //latLng.setVisibility(View.VISIBLE);
+                    latLng.setText("");
+                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps);
+                    //currentLocationButton.setColorFilter(getResources().getColor(R.color.Black));
+                }
             }
         });
 
@@ -218,4 +253,81 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+        App.getBus().register(this); // Here we register this activity in bus.
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+            googleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        App.getBus().unregister(this); // Here we unregister this acitivity from the bus.
+    }
+
+    @Subscribe
+    public void OnBackButtonClicked(BlackButtonClicked blackButtonClicked)
+    {
+        finish();
+    }
+    @Subscribe
+    public void OnDoneButtonClicked(DoneButtonClicked doneButtonClicked)
+    {
+        final DateQr dateQr = new DateQr();
+        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        int width = point.x;
+        int height = point.y;
+        int smallerDimension = width < height ? width : height;
+        smallerDimension = smallerDimension * 3 / 4;
+
+        dateQr.setTitles(titles.getText().toString());
+        dateQr.setPlaceName(placeName.getText().toString());
+        dateQr.setPlaceType(placeType.getText().toString());
+        dateQr.setDes(des.getText().toString());
+        if (latLng.getText().toString().equals("")){
+            latLng.setText("11, 12");
+        }
+        String[] sLatLng = latLng.getText().toString().split(",");
+        dateQr.setLat(Float.valueOf(sLatLng[0]));
+        dateQr.setLng(Float.valueOf(sLatLng[1]));
+        dateQr.setWebPage(webPage.getText().toString());
+
+        String sQr = dateQr.getsQr();
+        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(sQr,
+                null,
+                Contents.Type.TEXT,
+                BarcodeFormat.QR_CODE.toString(),
+                smallerDimension);
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = qrCodeEncoder.encodeAsBitmap();
+            //imgQrGen.setImageBitmap(bitmap);
+            AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
+            addDatabaseQr.addDb();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        Intent i = new Intent(getApplicationContext(), GenQr2Activity.class);
+        i.putExtra("img",byteArray);
+        startActivity(i);
+    }
+
 }

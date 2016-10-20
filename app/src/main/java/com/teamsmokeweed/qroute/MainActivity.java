@@ -7,25 +7,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.squareup.otto.Subscribe;
+import com.teamsmokeweed.qroute.bar.App;
+import com.teamsmokeweed.qroute.bar.BlackButtonClicked;
 import com.teamsmokeweed.qroute.database.GenRecycleviewActivity;
 import com.teamsmokeweed.qroute.genqr.GenQrActivity;
 import com.teamsmokeweed.qroute.readqr.ReadActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonToGen, buttonToRead, buttonToRoute;
+    private LinearLayout buttonToGen, buttonToRead, buttonToRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
 
 
-        buttonToGen = (Button) findViewById(R.id.ButtonToGen);
+        buttonToGen = (LinearLayout) findViewById(R.id.ButtonToGen);
         buttonToGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonToRead = (Button) findViewById(R.id.ButtonToRead);
+        buttonToRead = (LinearLayout) findViewById(R.id.ButtonToRead);
         buttonToRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonToRoute = (Button) findViewById(R.id.ButtonToRoute);
+        buttonToRoute = (LinearLayout) findViewById(R.id.ButtonToRoute);
         buttonToRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,14 +60,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_bar, menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_bar, menu);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//
+//        return true;
+//    }
 
 
-        return true;
-    }
+
+
 }

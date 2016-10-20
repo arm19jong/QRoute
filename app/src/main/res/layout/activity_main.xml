@@ -5,43 +5,103 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
 
     tools:context="com.teamsmokeweed.qroute.MainActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
-
-        />
-
-    <Button
+    <LinearLayout
         android:id="@+id/ButtonToGen"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gen"
-        android:textAllCaps="false"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/my_toolbar"
-        />
-    <Button
-        android:id="@+id/ButtonToRead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="read"
-        android:layout_below="@id/ButtonToGen"
-        android:layout_centerHorizontal="true"
-        />
-    <Button
+        android:orientation="horizontal"
+        android:paddingLeft="60dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="16dp"
+        >
+        <Button
+            android:layout_marginRight="16dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:textAllCaps="false"
+            android:background="@drawable/ic_add_location_black_24px"
+            />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New Location"
+            android:textColor="#0071BC"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ButtonToRoute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ButtonToGen"
+        android:orientation="horizontal"
+        android:paddingLeft="60dp"
+        android:layout_marginBottom="16dp"
+
+        >
+        <Button
+            android:layout_marginRight="16dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/ic_history_black_24px"
+            />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recent"
+            android:textColor="#0071BC"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ButtonToRead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ButtonToRoute"
+        android:orientation="horizontal"
+        android:paddingLeft="60dp"
+        >
+        <Button
+            android:layout_marginRight="16dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/ic_qr"
+            />
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read From QR"
+            android:textColor="#0071BC"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+        </LinearLayout>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="route"
-        android:layout_below="@id/ButtonToRead"
-        android:visibility="visible"
+        android:text="@string/m"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+
         />
+
+
+
 </RelativeLayout>

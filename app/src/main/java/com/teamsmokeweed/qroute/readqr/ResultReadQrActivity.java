@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.squareup.otto.Subscribe;
 import com.teamsmokeweed.qroute.R;
 import com.teamsmokeweed.qroute.RouteMap;
+import com.teamsmokeweed.qroute.bar.App;
+import com.teamsmokeweed.qroute.bar.BlackButtonClicked;
 import com.teamsmokeweed.qroute.database.AddDatabaseQr;
 import com.teamsmokeweed.qroute.genqr.Contents;
 import com.teamsmokeweed.qroute.genqr.DateQr;
@@ -139,7 +142,6 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         latLng.setText(dateQr.getLat()+", "+dateQr.getLng());
         webPage.setText(dateQr.getWebPage());
     }
-
 
 
 
