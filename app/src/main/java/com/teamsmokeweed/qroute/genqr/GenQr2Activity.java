@@ -15,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.bar.App;
+import com.teamsmokeweed.qroute.bar.BlackButtonClicked;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -104,5 +107,23 @@ public class GenQr2Activity extends AppCompatActivity {
                 startActivity(Intent.createChooser(share, "Select"));
             }
         });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getBus().register(this); // Here we register this activity in bus.
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        App.getBus().unregister(this); // Here we unregister this acitivity from the bus.
+    }
+
+    @Subscribe
+    public void OnBackButtonClicked(BlackButtonClicked blackButtonClicked)
+    {
+        finish();
     }
 }

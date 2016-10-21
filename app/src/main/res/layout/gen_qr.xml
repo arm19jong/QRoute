@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical"
 
     >
@@ -11,66 +11,187 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/titles"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title, Event...(optional)"
-        android:layout_below="@id/barGenQr"
-        android:layout_marginLeft="16dp"
-        />
-    <EditText
-        android:id="@+id/placeName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Place name"
-        android:layout_below="@id/titles"
-        android:layout_marginLeft="16dp"
-        />
-    <EditText
-        android:id="@+id/placeType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Place type"
-        android:layout_below="@id/placeName"
-        android:layout_marginLeft="16dp"
-        />
-    <EditText
-        android:id="@+id/des"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description, address... (optional)"
-        android:layout_below="@id/placeType"
-        android:layout_marginLeft="16dp"
-        />
-    <EditText
-        android:id="@+id/latLng"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Latitude, Longitude"
-        android:layout_below="@id/des"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="16dp"
-        />
-    <ImageButton
-        android:id="@+id/currentLocation"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_toRightOf="@id/latLng"
-        android:layout_below="@id/des"
-        android:layout_marginLeft="-50dp"
-        android:background="@drawable/ic_gps"
-        />
+        card_view:cardElevation="0dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home_24dp"
+            android:layout_marginTop="8dp"
+
+            />
+            <EditText
+                android:id="@+id/titles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Title, Event...(optional)"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <EditText
-        android:id="@+id/webPage"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Web page URL (optional)"
-        android:layout_below="@id/latLng"
-        android:layout_marginLeft="16dp"
-        />
+        card_view:cardElevation="0dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_location_black_24px"
+                android:layout_marginTop="8dp"
+                />
+            <EditText
+                android:id="@+id/placeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Place name"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_local_offer_24px"
+                android:layout_marginTop="8dp"
+                />
+            <EditText
+                android:id="@+id/placeType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Place type"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_short_text_24px"
+                android:layout_marginTop="8dp"
+                />
+            <EditText
+                android:id="@+id/des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Description (optional)"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_link_24dp"
+                android:layout_marginTop="8dp"
+                />
+            <EditText
+                android:id="@+id/webPage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Web page URL (optional)"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_world_location"
+                android:layout_marginTop="8dp"
+                />
+            <EditText
+                android:id="@+id/latLng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Latitude, Longitude"
+                android:layout_below="@id/des"
+                android:layout_marginRight="48dp"
+                android:textSize="16sp"
+                />
+            <ImageButton
+                android:id="@+id/currentLocation"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_gps"
+                android:layout_marginLeft="-40dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+
     <Button
         android:id="@+id/buttonGen"
         android:layout_width="wrap_content"
@@ -87,8 +208,7 @@
         android:id="@+id/fragment_map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/webPage"
         />
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.teamsmokeweed.qroute.R;
+import com.teamsmokeweed.qroute.database.AddDatabaseQr;
 import com.teamsmokeweed.qroute.genqr.DateQr;
 
 import me.dm7.barcodescanner.core.IViewFinder;
@@ -33,6 +34,7 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
 
     private ZXingScannerView mScannerView;
 
+    private DateQr dateQr;
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -74,6 +76,11 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
 
         String[] sQr = rawResult.getText().split("#420#");
         //String part1 = parts[0];
+
+        setDateQr(sQr);
+        AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
+        addDatabaseQr.addDb();
+
 
         Intent i = new Intent(getApplicationContext(), ResultReadQrActivity.class);
         i.putExtra("sQr", sQr);
@@ -140,5 +147,17 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
             }
             canvas.drawText(TRADE_MARK_TEXT, tradeMarkLeft, tradeMarkTop, PAINT);
         }
+    }
+
+    private void setDateQr(String[] sQr){
+        dateQr = new DateQr();
+
+        dateQr.setTitles(sQr[2]);
+        dateQr.setPlaceName(sQr[3]);
+        dateQr.setPlaceType(sQr[4]);
+        dateQr.setDes(sQr[5]);
+        dateQr.setLat(Float.valueOf(sQr[0]));
+        dateQr.setLng(Float.valueOf(sQr[1]));
+        dateQr.setWebPage(sQr[6]);
     }
 }

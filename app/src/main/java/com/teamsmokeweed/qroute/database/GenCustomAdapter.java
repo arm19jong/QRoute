@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.akexorcist.googledirection.model.Step;
 import com.daimajia.swipe.SwipeLayout;
@@ -34,6 +36,7 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
     ArrayList<String> arrayList_WebPage;
     ArrayList<Float> arrayList_Lat;
     ArrayList<Float> arrayList_Lng;
+    ArrayList<Integer> arrayList_Id;
 
     @Override
     public int getSwipeLayoutResourceId(int position) {
@@ -41,7 +44,7 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        TextView mTitle, mPlaceName;
+        TextView mTitle, mPlaceName, tvDel;
         public SwipeLayout swipeLayout;
         CardView cardView;
 
@@ -50,6 +53,7 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
             mTitle = (TextView) v.findViewById(R.id.titles);
             mPlaceName = (TextView) v.findViewById(R.id.placeName);
             cardView = (CardView) v.findViewById(R.id.card_view);
+            tvDel = (TextView) v.findViewById(R.id.tvDelete);
             itemView.setTag(itemView);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
         }
@@ -59,7 +63,8 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
     public GenCustomAdapter(Context context, ArrayList<String> arrayList_Titles,
                             ArrayList<String> arrayList_PlaceName, ArrayList<String> arrayList_PlaceType,
                             ArrayList<String> arrayList_Des, ArrayList<String> arrayList_WebPage,
-                            ArrayList<Float> arrayList_Lat, ArrayList<Float> arrayList_Lng){
+                            ArrayList<Float> arrayList_Lat, ArrayList<Float> arrayList_Lng,
+                            ArrayList<Integer> arrayList_Id){
         this.context = context;
         this.arrayList_Title = arrayList_Titles;
         this.arrayList_PlaceName = arrayList_PlaceName;
@@ -68,6 +73,7 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
         this.arrayList_WebPage = arrayList_WebPage;
         this.arrayList_Lat = arrayList_Lat;
         this.arrayList_Lng = arrayList_Lng;
+        this.arrayList_Id = arrayList_Id;
     }
 
     @Override
@@ -87,7 +93,7 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
         // Drag From Left
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
+        //viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
 
         // Drag From Right
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper));
@@ -103,6 +109,37 @@ public class GenCustomAdapter extends RecyclerSwipeAdapter<GenCustomAdapter.View
                         arrayList_Des.get(position), arrayList_WebPage.get(position)
                         );
                 startResultActivity(context, sqr);
+            }
+        });
+        viewHolder.tvDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String itemLabel = arrayList_Title.get(position);
+
+                // Remove the item on remove/button click
+                DateQr dateQr = new DateQr();
+                dateQr.setId(arrayList_Id.get(position));
+
+                DelDatabaseQr delDatabaseQr = new DelDatabaseQr(dateQr, context);
+                delDatabaseQr.DelDb();
+
+                arrayList_Title.remove(position);
+                arrayList_Lat.remove(position);
+                arrayList_Lng.remove(position);
+                arrayList_PlaceName.remove(position);
+                arrayList_PlaceType.remove(position);
+                arrayList_Des.remove(position);
+                arrayList_WebPage.remove(position);
+                arrayList_Id.remove(position);
+
+
+
+                notifyItemRemoved(position);
+
+                notifyItemRangeChanged(position, arrayList_Title.size());
+
+                // Show the removed item label
+                Toast.makeText(context,"Removed : " + itemLabel,Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -13,6 +13,7 @@ import java.util.List;
 public class DateQr {
     String titles, placeName, placeType, des, webPage, sQr;
     Float lat, lng;
+    Integer id;
 
     public String getDes() {
         return des;
@@ -91,6 +92,14 @@ public class DateQr {
             webPage = "-";
         }
         this.webPage = webPage;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getsQr(){

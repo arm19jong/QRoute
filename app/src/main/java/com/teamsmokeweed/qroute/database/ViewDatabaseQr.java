@@ -24,6 +24,8 @@ public class ViewDatabaseQr {
     ArrayList<Float> lat = new ArrayList<Float>();
     ArrayList<Float> lng = new ArrayList<Float>();
 
+    ArrayList<Integer> id = new ArrayList<Integer>();
+
     DatabaseGenQr mHelper;
     SQLiteDatabase mDb;
     Cursor mCursor;
@@ -90,6 +92,14 @@ public class ViewDatabaseQr {
         this.webPage = webPage;
     }
 
+    public ArrayList<Integer> getId() {
+        return id;
+    }
+
+    public void setId(ArrayList<Integer> id) {
+        this.id = id;
+    }
+
     public void queryGen(){
         mHelper = new DatabaseGenQr(context);
         mDb = mHelper.getReadableDatabase();
@@ -110,6 +120,7 @@ public class ViewDatabaseQr {
             this.titles.add(mCursor.getString(mCursor.getColumnIndex(DatabaseGenQr.Col_titles)));
             this.des.add(mCursor.getString(mCursor.getColumnIndex(DatabaseGenQr.Col_des)));
             this.webPage.add(mCursor.getString(mCursor.getColumnIndex(DatabaseGenQr.Col_web)));
+            this.id.add(mCursor.getInt(mCursor.getColumnIndex(DatabaseGenQr.Col_id)));
             mCursor.moveToNext();
         }
 

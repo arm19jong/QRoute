@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.teamsmokeweed.qroute.bar.App;
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout buttonToGen, buttonToRead, buttonToRoute;
 
+    Button bg1;
+    TextView bg2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(myToolbar);
 
+        //bg1 = (Button) fi
 
         buttonToGen = (LinearLayout) findViewById(R.id.ButtonToGen);
         buttonToGen.setOnClickListener(new View.OnClickListener() {

@@ -49,7 +49,8 @@ public class GenRecycleviewActivity extends AppCompatActivity {
 
         mAdapter = new GenCustomAdapter(getApplicationContext(), viewDatabaseQr.getTitles(),
                 viewDatabaseQr.getPlaceName(), viewDatabaseQr.getPlaceType(), viewDatabaseQr.getDes(),
-                viewDatabaseQr.getWebPage(), viewDatabaseQr.getLat(), viewDatabaseQr.getLng());
+                viewDatabaseQr.getWebPage(), viewDatabaseQr.getLat(), viewDatabaseQr.getLng(), viewDatabaseQr.getId());
+
         ((GenCustomAdapter) mAdapter).setMode(Attributes.Mode.Single);
         mRecyclerView.setAdapter(mAdapter);
         //mRecyclerView.addOnItemTouchListener(

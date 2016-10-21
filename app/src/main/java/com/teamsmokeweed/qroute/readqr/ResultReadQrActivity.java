@@ -68,8 +68,8 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         sQr = i.getStringArrayExtra("sQr");
 
         setDateQr();
-        AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
-        addDatabaseQr.addDb();
+        //AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
+        //addDatabaseQr.addDb();
         showData();
 
         webPage.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +171,24 @@ public class ResultReadQrActivity  extends AppCompatActivity {
         placeTypeBar.setText(dateQr.getPlaceType());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getBus().register(this); // Here we register this activity in bus.
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        App.getBus().unregister(this); // Here we unregister this acitivity from the bus.
+    }
+
+    @Subscribe
+    public void OnBackButtonClicked(BlackButtonClicked blackButtonClicked)
+    {
+        finish();
+    }
 
 
 }
