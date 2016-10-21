@@ -35,4 +35,5 @@ dependencies {
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
     compile 'com.squareup:otto:+'
+    compile 'com.android.support:design:24.2.1'
 }

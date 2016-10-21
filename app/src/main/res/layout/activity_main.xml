@@ -30,8 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create New Location"
-            android:textColor="#0071BC"
-            android:textSize="16dp"
+            android:textColor="#29ABE2"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
 
@@ -58,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recent"
-            android:textColor="#0071BC"
-            android:textSize="16dp"
+            android:textColor="#29ABE2"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
     </LinearLayout>
@@ -83,8 +83,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Read From QR"
-            android:textColor="#0071BC"
-            android:textSize="16dp"
+            android:textColor="#29ABE2"
+            android:textSize="18dp"
             android:textStyle="bold"
             />
         </LinearLayout>
