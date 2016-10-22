@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -91,6 +92,13 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         buttonGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(GenQrActivity.this, "vvvvv", Toast.LENGTH_SHORT).show();
+                if(titles.getText().toString().equals("")){
+                    titles.setError("NotnuLL");
+                    Toast.makeText(GenQrActivity.this, "aaa", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //Find screen size
                 WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
                 Display display = manager.getDefaultDisplay();
@@ -282,6 +290,25 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     @Subscribe
     public void OnDoneButtonClicked(DoneButtonClicked doneButtonClicked)
     {
+        boolean bTitles=false, bDes=false, bWebPage = false;
+        if(titles.getText().toString().equals("")){
+            titles.setError("Not null");
+            bTitles = true;
+        }
+        if (des.getText().toString().equals("")){
+            des.setError("Not null");
+            bDes = true;
+        }
+        if(webPage.getText().toString().equals("")){
+            webPage.setError("Nou null");
+            bWebPage=true;
+        }
+        if(bTitles||bDes||bWebPage){
+            return;
+        }
+
+
+
         final DateQr dateQr = new DateQr();
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
@@ -299,9 +326,16 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         if (latLng.getText().toString().equals("")){
             latLng.setText("11, 12");
         }
-        String[] sLatLng = latLng.getText().toString().split(",");
-        dateQr.setLat(Float.valueOf(sLatLng[0]));
-        dateQr.setLng(Float.valueOf(sLatLng[1]));
+        try {
+            String[] sLatLng = latLng.getText().toString().split(",");
+            dateQr.setLat(Float.valueOf(sLatLng[0]));
+            dateQr.setLng(Float.valueOf(sLatLng[1]));
+        }
+        catch(Exception e) {
+            latLng.setError("Latitude, Longitude");
+            return;
+    }
+
         dateQr.setWebPage(webPage.getText().toString());
 
         String sQr = dateQr.getsQr();
