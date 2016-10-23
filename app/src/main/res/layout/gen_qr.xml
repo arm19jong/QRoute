@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_home_24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
 
             />
             <EditText
@@ -34,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Title, Event"
                 android:textSize="16sp"
+                android:background="@null"
+
                 />
 
         </LinearLayout>
@@ -54,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add_location_black_24px"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 />
             <EditText
                 android:id="@+id/placeName"
@@ -62,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Place name"
                 android:textSize="16sp"
+                android:background="@null"
                 />
 
         </LinearLayout>
@@ -82,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_local_offer_24px"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 />
             <EditText
                 android:id="@+id/placeType"
@@ -90,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Place type"
                 android:textSize="16sp"
+                android:background="@null"
                 />
 
         </LinearLayout>
@@ -110,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_short_text_24px"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 />
             <EditText
                 android:id="@+id/des"
@@ -118,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Add Description (optional)"
                 android:textSize="16sp"
+                android:background="@null"
                 />
 
         </LinearLayout>
@@ -137,7 +142,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_link_24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 />
             <EditText
                 android:id="@+id/webPage"
@@ -145,6 +150,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Add Web page URL (optional)"
                 android:textSize="16sp"
+                android:background="@null"
                 />
 
         </LinearLayout>
@@ -165,7 +171,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_world_location"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 />
             <EditText
                 android:id="@+id/latLng"
@@ -175,6 +181,7 @@
                 android:layout_below="@id/des"
                 android:layout_marginRight="48dp"
                 android:textSize="16sp"
+                android:background="@null"
                 />
             <ImageButton
                 android:id="@+id/currentLocation"
@@ -182,6 +189,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ic_gps"
                 android:layout_marginLeft="-40dp"
+
                 />
 
 

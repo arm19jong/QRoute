@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">QRoute</string>
     <string name="m">QRoute v0.1 \n Developed by #TeamSmokeWeed</string>
+    <string name="gps_network_not_enabled">gps_network_not_enabled</string>
+    <string name="open_location_settings">open_location_settings</string>
+    <string name="Cancel">Cancel</string>
 </resources>
