@@ -1,5 +1,6 @@
 package com.teamsmokeweed.qroute.genqr;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -15,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
 import com.squareup.otto.Subscribe;
 import com.teamsmokeweed.qroute.R;
 import com.teamsmokeweed.qroute.bar.App;
@@ -36,10 +42,22 @@ public class GenQr2Activity extends AppCompatActivity {
     ImageView imageView;
     Button saveButton, shareButton;
     Bitmap bitmap;
+    private ShareButton shareButtonFB;
+    private int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.gen_qr2);
+
+        shareButtonFB = (ShareButton) findViewById(R.id.share_btn);
+        shareButtonFB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                postPicture();
+            }
+        });
 
         imageView = (ImageView) findViewById(R.id.imgQrGen);
         saveButton = (Button) findViewById(R.id.save);
@@ -150,4 +168,47 @@ public class GenQr2Activity extends AppCompatActivity {
     {
         finish();
     }
+
+    public void postPicture() {
+        //check counter
+        if(counter == 0) {
+            //save the screenshot
+            View rootView = findViewById(android.R.id.content).getRootView();
+            rootView.setDrawingCacheEnabled(true);
+            // creates immutable clone of image
+            //image = Bitmap.createBitmap(rootView.getDrawingCache());
+            final Bitmap image = bitmap;
+
+//            image = BitmapFactory.decodeResource(GenQr2Activity.this.getResources(),
+//                    R.mipmap.ic_launcher);
+            // destroy
+            rootView.destroyDrawingCache();
+
+            //share dialog
+            AlertDialog.Builder shareDialog = new AlertDialog.Builder(this);
+            shareDialog.setTitle("Share QrCode");
+            shareDialog.setMessage("Share image QrCode to Facebook?");
+            shareDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //share the image to Facebook
+                    SharePhoto photo = new SharePhoto.Builder().setBitmap(image).build();
+                    SharePhotoContent content = new SharePhotoContent.Builder().addPhoto(photo).build();
+                    shareButtonFB.setShareContent(content);
+                    counter = 1;
+                    shareButtonFB.performClick();
+                }
+            });
+            shareDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            shareDialog.show();
+        }
+        else {
+            counter = 0;
+            shareButtonFB.setShareContent(null);
+        }
+    }
+
 }
