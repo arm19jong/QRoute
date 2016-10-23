@@ -60,8 +60,32 @@ public class GenQr2Activity extends AppCompatActivity {
                     Date d = new Date();
                     String filename  = (String) DateFormat.format("hhmmss-MMddyyyy"
                             , d.getTime());
-                    File dir = new File(Environment.getExternalStorageDirectory()
-                            , "/Pictures/" + filename + ".png");
+//                    File dir = new File(Environment.getExternalStorageDirectory()
+//                            , "/Pictures/" + filename + ".png");
+//                    File dir=new File(Environment.DIRECTORY_PICTURES, "/"
+//                            + filename + ".png");
+
+
+                    File pictureFolder = Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES
+                    );
+
+                    //Toast.makeText(GenQr2Activity.this, "w55ww", Toast.LENGTH_SHORT).show();
+                    File dirr = new File(pictureFolder, "/QRoute");
+                    //dirr.mkdir();
+                    if(!dirr.exists()){
+                        //Toast.makeText(GenQr2Activity.this, "wwww", Toast.LENGTH_SHORT).show();
+                        dirr.mkdir();
+                    }
+
+
+                    File dir = new File(pictureFolder,"/QRoute/"+ filename + ".png");
+
+
+                    //if(!dir.exists()){
+                    //    dir.mkdirs();
+                    //}
+
                     FileOutputStream out = new FileOutputStream(dir);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -80,8 +104,8 @@ public class GenQr2Activity extends AppCompatActivity {
                     sendBroadcast(intent);
                     out.close();
 
-                    Toast.makeText(getApplicationContext(), "Saved!"
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Saved to: "+dir.toString()
+                            , Toast.LENGTH_LONG).show();
                 } catch(FileNotFoundException e) {
                     e.printStackTrace();
                 } catch(IOException e) {
@@ -93,7 +117,7 @@ public class GenQr2Activity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GenQr2Activity.this, "Shareee", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(GenQr2Activity.this, "Shareee", Toast.LENGTH_SHORT).show();
                 Bitmap b = bitmap;
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/png");

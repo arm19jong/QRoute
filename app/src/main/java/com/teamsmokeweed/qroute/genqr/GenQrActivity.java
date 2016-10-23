@@ -255,7 +255,7 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                         network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
                     } catch(Exception ex) {}
 
-                    if(!gps_enabled || !network_enabled) {
+                    if(!gps_enabled && !network_enabled) {
                         // notify user
                         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                         dialog.setMessage(context.getResources().getString(R.string.gps_network_not_enabled));
