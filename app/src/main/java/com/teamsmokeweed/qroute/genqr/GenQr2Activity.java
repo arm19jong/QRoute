@@ -47,8 +47,7 @@ public class GenQr2Activity extends AppCompatActivity {
 
         Intent i = getIntent();
         final byte[] byteArray = getIntent().getByteArrayExtra("img");
-
-       bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imageView.setImageBitmap(bitmap);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +93,7 @@ public class GenQr2Activity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(GenQr2Activity.this, "Shareee", Toast.LENGTH_SHORT).show();
                 Bitmap b = bitmap;
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/png");

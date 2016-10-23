@@ -255,8 +255,6 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                         network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
                     } catch(Exception ex) {}
 
-                    Toast.makeText(context, gps_enabled+"-"+network_enabled, Toast.LENGTH_SHORT).show();
-
                     if(!gps_enabled || !network_enabled) {
                         // notify user
                         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -280,6 +278,8 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                         });
                         dialog.show();
                     }
+
+
                     //latLng.setVisibility(View.INVISIBLE);
                     //latLng.
                     latLng.setText(lat+", "+lng);
