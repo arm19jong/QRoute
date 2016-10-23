@@ -15,6 +15,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -87,6 +89,81 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         currentLocationButton = (ImageButton) findViewById(R.id.currentLocation);
         currentLocationclick = false;
 
+        titles.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!titles.getText().toString().equals("")) {
+                    titles.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        placeName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!placeName.getText().toString().equals("")) {
+                    placeName.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        placeType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!placeType.getText().toString().equals("")) {
+                    placeType.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        latLng.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!latLng.getText().toString().equals("")) {
+                    latLng.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         final DateQr dateQr = new DateQr();
         buttonGen.setOnClickListener(new View.OnClickListener() {
@@ -274,13 +351,10 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         if (googleApiClient != null && googleApiClient.isConnected()) {
             googleApiClient.disconnect();
         }
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
         App.getBus().unregister(this); // Here we unregister this acitivity from the bus.
     }
+
+
 
     @Subscribe
     public void OnBackButtonClicked(BlackButtonClicked blackButtonClicked)
@@ -290,22 +364,49 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     @Subscribe
     public void OnDoneButtonClicked(DoneButtonClicked doneButtonClicked)
     {
-        boolean bTitles=false, bDes=false, bWebPage = false;
+        //boolean bTitles=false, bDes=false, bWebPage = false;
+
+//        if(titles.getText().toString().equals("")){
+//            titles.setError("Not null");
+//            bTitles = true;
+//        }
+//        if (des.getText().toString().equals("")){
+//            des.setError("Not null");
+//            bDes = true;
+//        }
+//        if(webPage.getText().toString().equals("")){
+//            webPage.setError("Nou null");
+//            bWebPage=true;
+//        }
+//        if(bTitles||bDes||bWebPage){
+//            return;
+//        }
+        boolean buttonTitles=false, buttonPlacename=false, buttonPlaceType=false,buttonLatLng=false;
         if(titles.getText().toString().equals("")){
             titles.setError("Not null");
-            bTitles = true;
+            buttonTitles=true;
         }
-        if (des.getText().toString().equals("")){
-            des.setError("Not null");
-            bDes = true;
+        if (placeName.getText().toString().equals("")){
+            placeName.setError("Not null");
+            buttonPlacename=true;
         }
-        if(webPage.getText().toString().equals("")){
-            webPage.setError("Nou null");
-            bWebPage=true;
+        if (placeType.getText().toString().equals("")){
+            placeType.setError("Not null");
+            buttonPlaceType=true;
         }
-        if(bTitles||bDes||bWebPage){
+        if (latLng.getText().toString().equals("")){
+            latLng.setError("Not null");
+            buttonLatLng=true;
+        }
+        if (buttonTitles||buttonPlacename||buttonPlaceType||buttonLatLng){
             return;
         }
+
+        titles.setError(null);
+        placeName.setError(null);
+        placeType.setError(null);
+        latLng.setError(null);
+
 
 
 

@@ -32,7 +32,7 @@
                 android:id="@+id/titles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Title, Event...(optional)"
+                android:hint="Enter Title, Event"
                 android:textSize="16sp"
                 />
 

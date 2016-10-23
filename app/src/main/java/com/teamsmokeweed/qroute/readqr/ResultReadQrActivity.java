@@ -179,8 +179,8 @@ public class ResultReadQrActivity  extends AppCompatActivity {
 
 
     @Override
-    protected void onPause(){
-        super.onPause();
+    protected void onStop(){
+        super.onStop();
         App.getBus().unregister(this); // Here we unregister this acitivity from the bus.
     }
 
