@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:text="Regenerate QR code"
+        android:text="@string/regenerate_qr_code"
         android:textSize="24dp"
         android:textColor="#FFF"
         android:gravity="center_horizontal|center"

@@ -1,8 +1,27 @@
 <resources>
     <string name="app_name">QRoute</string>
     <string name="m">QRoute v0.1 \n Developed by #TeamSmokeWeed</string>
-    <string name="gps_network_not_enabled">gps_network_not_enabled</string>
-    <string name="open_location_settings">open_location_settings</string>
+    <string name="gps_network_not_enabled">GPS Network not enabled</string>
+    <string name="open_location_settings">Open location settings</string>
     <string name="Cancel">Cancel</string>
     <string name="facebook_app_id">1282369891784557</string>
+    <string name="Create_New_Location">Create New Location</string>
+    <string name="recent">Recent</string>
+    <string name="read_from_qr">Read From QR</string>
+    <string name="create_new_location">Create new location</string>
+    <string name="location_info_qr_code">Location info QR Code</string>
+    <string name="place_name">[Place name]</string>
+    <string name="place_type">[Place type]</string>
+    <string name="enter_title_event">Enter Title, Event</string>
+    <string name="enter_place_name">Enter Place name</string>
+    <string name="enter_place_type">Enter Place type</string>
+    <string name="add_description_optional">Add Description (optional)</string>
+    <string name="add_web_page_url_optional">Add Web page URL (optional)</string>
+    <string name="enter_latitude_longitude">Enter Latitude, Longitude</string>
+    <string name="here_is_your_qr">Here is your QR</string>
+    <string name="share">Share</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="regenerate_qr_code">Regenerate QR code</string>
 </resources>

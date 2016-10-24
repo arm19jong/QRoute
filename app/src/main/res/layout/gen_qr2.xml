@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Here is your QR"
-        android:textSize="32dp"
+        android:text="@string/here_is_your_qr"
+        android:textSize="32sp"
         android:textColor="#4CAF50"
         android:layout_below="@id/barGenQr2"
         android:layout_marginTop="32dp"
@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Share"
+            android:text="@string/share"
             android:textColor="@color/Black"
             android:layout_gravity="center"
             />
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/save"
             android:textColor="@color/Black"
             android:layout_gravity="center"
             />
@@ -91,6 +91,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="Shareeeee"
         android:layout_below="@id/imgQrGen"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

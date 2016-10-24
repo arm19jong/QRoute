@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="Location info QR Code"
+        android:text="@string/location_info_qr_code"
         android:textColor="@android:color/white"
         android:layout_toRightOf="@id/backButton"
         android:textSize="20sp"

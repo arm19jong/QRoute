@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:background="#045675"
             android:gravity="center"
-            android:text="Edit"
+            android:text="@string/edit"
             android:textColor="#fff" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:background="#f00"
             android:gravity="center"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="#fff" />
     </LinearLayout>
 

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         buttonToRead = (LinearLayout) findViewById(R.id.ButtonToRead);
         buttonToRead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        buttonToRead.setEnabled(false);
+        buttonToRoute.setEnabled(false);
 
     }
 //    @Override
