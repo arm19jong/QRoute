@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.squareup.otto.Subscribe;
@@ -59,7 +61,7 @@ import java.io.ByteArrayOutputStream;
  */
 
 public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMapClickListener {
 
     private Button buttonGen;
             ImageButton currentLocationButton;
@@ -288,6 +290,19 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                     //currentLocationButton.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
                     //currentLocationButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
                     currentLocationButton.setBackgroundResource(R.drawable.ic_gps_blue);
+                    googleMap.clear();
+                    googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title("Select Location")
+                    );
+
+                    LatLng coordinate = new LatLng(lat
+                            , lng);
+
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    coordinate, 16));
+                    latLng.setEnabled(false);
+
 
                 }
                 else{
@@ -295,7 +310,44 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
                     latLng.setText("");
                     currentLocationButton.setBackgroundResource(R.drawable.ic_gps);
                     //currentLocationButton.setColorFilter(getResources().getColor(R.color.Black));
+                    googleMap.clear();
+                    latLng.setEnabled(true);
                 }
+            }
+        });
+
+        latLng.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    String[] sLatLng = latLng.getText().toString().split(",");
+
+                    googleMap.clear();
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Float.valueOf(sLatLng[0]), Float.valueOf(sLatLng[1])))
+                            .title("Select Location"));
+
+                    LatLng coordinate = new LatLng(Float.valueOf(sLatLng[0])
+                            , Float.valueOf(sLatLng[1]));
+
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                            coordinate, 16));
+                    //latLng.setEnabled(false);
+                }
+                catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -379,14 +431,30 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         }
         googleMap.setMyLocationEnabled(true);
 
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                coordinate, 16));
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                coordinate, 16));
     }
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
+        this.googleMap.setOnMapClickListener(this);
     }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+        if (currentLocationclick==false){
+            this.latLng.setText((float)latLng.latitude+", "+(float)latLng.longitude);
+            this.googleMap.clear();
+            this.googleMap.addMarker(new MarkerOptions()
+            .position(latLng)
+            .title("Select Location")
+            );
+        }
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -513,5 +581,6 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         i.putExtra("img",byteArray);
         startActivity(i);
     }
+
 
 }
