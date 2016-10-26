@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -63,11 +64,12 @@ import java.io.ByteArrayOutputStream;
 public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMapClickListener {
 
-    private Button buttonGen;
-            ImageButton currentLocationButton;
-    private EditText titles, placeName, placeType, des, latLng, webPage;
+
+
+    private EditText titles, placeName, placeType, des,  webPage;
     private ImageView imgQrGen;
     private String s;
+    TextView latLng;
 
     private GoogleApiClient googleApiClient;
     double lat, lng;
@@ -76,7 +78,7 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     GoogleMap googleMap;
     //int check_navi;
     //LatLng latLngs;
-    boolean currentLocationclick;
+
 
 
     @Override
@@ -84,17 +86,24 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gen_qr);
 
-
-        buttonGen = (Button) findViewById(R.id.buttonGen);
         titles = (EditText) findViewById(R.id.titles);
         placeName = (EditText) findViewById(R.id.placeName);
         placeType = (EditText) findViewById(R.id.placeType);
         des = (EditText) findViewById(R.id.des);
-        latLng = (EditText) findViewById(R.id.latLng);
+        latLng = (TextView) findViewById(R.id.latLng);
         webPage = (EditText) findViewById(R.id.webPage);
         imgQrGen = (ImageView) findViewById(R.id.imgQrGen);
-        currentLocationButton = (ImageButton) findViewById(R.id.currentLocation);
-        currentLocationclick = false;
+
+
+
+        latLng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(GenQrActivity.this, GenQrMapActivity.class);
+                //i.putExtra("sendTextStr",sendText.getText().toString() );
+                startActivityForResult(i, 1);
+            }
+        });
 
         titles.addTextChangedListener(new TextWatcher() {
             @Override
@@ -172,149 +181,100 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        final DateQr dateQr = new DateQr();
-        buttonGen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //final DateQr dateQr = new DateQr();
 
-                Toast.makeText(GenQrActivity.this, "vvvvv", Toast.LENGTH_SHORT).show();
-                if(titles.getText().toString().equals("")){
-                    titles.setError("NotnuLL");
-                    Toast.makeText(GenQrActivity.this, "aaa", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //Find screen size
-                WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-                Display display = manager.getDefaultDisplay();
-                Point point = new Point();
-                display.getSize(point);
-                int width = point.x;
-                int height = point.y;
-                int smallerDimension = width < height ? width : height;
-                smallerDimension = smallerDimension * 3 / 4;
-
-                dateQr.setTitles(titles.getText().toString());
-                dateQr.setPlaceName(placeName.getText().toString());
-                dateQr.setPlaceType(placeType.getText().toString());
-                dateQr.setDes(des.getText().toString());
-                if (latLng.getText().toString().equals("")){
-                    latLng.setText("11, 12");
-                }
-                String[] sLatLng = latLng.getText().toString().split(",");
-                dateQr.setLat(Float.valueOf(sLatLng[0]));
-                dateQr.setLng(Float.valueOf(sLatLng[1]));
-                dateQr.setWebPage(webPage.getText().toString());
-
-                String sQr = dateQr.getsQr();
-                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(sQr,
-                        null,
-                        Contents.Type.TEXT,
-                        BarcodeFormat.QR_CODE.toString(),
-                        smallerDimension);
-
-                Bitmap bitmap = null;
-                try {
-                    bitmap = qrCodeEncoder.encodeAsBitmap();
-                    //imgQrGen.setImageBitmap(bitmap);
-                    AddDatabaseQr addDatabaseQr = new AddDatabaseQr(dateQr, getApplicationContext());
-                    addDatabaseQr.addDb();
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-
-                Intent i = new Intent(getApplicationContext(), GenQr2Activity.class);
-                i.putExtra("img",byteArray);
-                startActivity(i);
-
-
-            }
-        });
         final Context context = GenQrActivity.this;
 
-        currentLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                currentLocationclick = !currentLocationclick;
-                if (currentLocationclick == true){
-
-
-                    LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-                    boolean gps_enabled = false;
-                    boolean network_enabled = false;
-
-                    try {
-                        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    } catch(Exception ex) {}
-
-                    try {
-                        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                    } catch(Exception ex) {}
-
-                    if(!gps_enabled && !network_enabled) {
-                        // notify user
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                        dialog.setMessage(context.getResources().getString(R.string.gps_network_not_enabled));
-                        dialog.setPositiveButton(context.getResources().getString(R.string.open_location_settings), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                // TODO Auto-generated method stub
-                                Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                context.startActivity(myIntent);
-                                //get gps
-                            }
-                        });
-                        dialog.setNegativeButton(context.getString(R.string.Cancel), new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        });
-                        dialog.show();
-                    }
-
-
-                    //latLng.setVisibility(View.INVISIBLE);
-                    //latLng.
-                    latLng.setText(lat+", "+lng);
-                   // currentLocationButton.setColorFilter(getResources().getColor(R.color.colorPrimaryDark));
-                    //currentLocationButton.setColorFilter(Color.rgb(0,0,50));
-                    //currentLocationButton.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
-                    //currentLocationButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps_blue);
-                    googleMap.clear();
-                    googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat, lng))
-                    .title("Select Location")
-                    );
-
-                    LatLng coordinate = new LatLng(lat
-                            , lng);
-
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    coordinate, 16));
-                    latLng.setEnabled(false);
-
-
-                }
-                else{
-                    //latLng.setVisibility(View.VISIBLE);
-                    latLng.setText("");
-                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps);
-                    //currentLocationButton.setColorFilter(getResources().getColor(R.color.Black));
-                    googleMap.clear();
-                    latLng.setEnabled(true);
-                }
-            }
-        });
+//        currentLocationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                currentLocationclick = !currentLocationclick;
+//
+//                if (currentLocationclick == true){
+//                    Intent i = new Intent(GenQrActivity.this, GenQrMapActivity.class);
+//                    //i.putExtra("sendTextStr",sendText.getText().toString() );
+//                    startActivityForResult(i, 1);
+//                    return;
+//                }
+//                else {
+//                    //return;.
+//                }
+//
+//                if (currentLocationclick == true){
+//
+//
+//                    LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+//                    boolean gps_enabled = false;
+//                    boolean network_enabled = false;
+//
+//                    try {
+//                        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+//                    } catch(Exception ex) {}
+//
+//                    try {
+//                        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//                    } catch(Exception ex) {}
+//
+//                    if(!gps_enabled && !network_enabled) {
+//                        // notify user
+//                        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+//                        dialog.setMessage(context.getResources().getString(R.string.gps_network_not_enabled));
+//                        dialog.setPositiveButton(context.getResources().getString(R.string.open_location_settings), new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+//                                // TODO Auto-generated method stub
+//                                Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                                context.startActivity(myIntent);
+//                                //get gps
+//                            }
+//                        });
+//                        dialog.setNegativeButton(context.getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+//                                // TODO Auto-generated method stub
+//
+//                            }
+//                        });
+//                        dialog.show();
+//                    }
+//
+//
+//                    //latLng.setVisibility(View.INVISIBLE);
+//                    //latLng.
+//                    latLng.setText(lat+", "+lng);
+//                   // currentLocationButton.setColorFilter(getResources().getColor(R.color.colorPrimaryDark));
+//                    //currentLocationButton.setColorFilter(Color.rgb(0,0,50));
+//                    //currentLocationButton.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
+//                    //currentLocationButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+//                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps_blue);
+//                    googleMap.clear();
+//                    googleMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(lat, lng))
+//                    .title("Select Location")
+//                    );
+//
+//                    LatLng coordinate = new LatLng(lat
+//                            , lng);
+//
+//                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                    coordinate, 16));
+//                    latLng.setEnabled(false);
+//
+//
+//                }
+//                else{
+//                    //latLng.setVisibility(View.VISIBLE);
+//                    latLng.setText("");
+//                    currentLocationButton.setBackgroundResource(R.drawable.ic_gps);
+//                    //currentLocationButton.setColorFilter(getResources().getColor(R.color.Black));
+//                    googleMap.clear();
+//                    latLng.setEnabled(true);
+//                }
+//            }
+//        });
 
         latLng.addTextChangedListener(new TextWatcher() {
             @Override
@@ -439,19 +399,20 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
         this.googleMap.setOnMapClickListener(this);
+
+        this.googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        //this.googleMap.setMapStyle()
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
 
-        if (currentLocationclick==false){
             this.latLng.setText((float)latLng.latitude+", "+(float)latLng.longitude);
             this.googleMap.clear();
             this.googleMap.addMarker(new MarkerOptions()
             .position(latLng)
             .title("Select Location")
             );
-        }
 
     }
 
@@ -500,19 +461,19 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
 //        }
         boolean buttonTitles=false, buttonPlacename=false, buttonPlaceType=false,buttonLatLng=false;
         if(titles.getText().toString().equals("")){
-            titles.setError("Not null");
+            titles.setError(getString(R.string.notnull));
             buttonTitles=true;
         }
         if (placeName.getText().toString().equals("")){
-            placeName.setError("Not null");
+            placeName.setError(getString(R.string.notnull));
             buttonPlacename=true;
         }
         if (placeType.getText().toString().equals("")){
-            placeType.setError("Not null");
+            placeType.setError(getString(R.string.notnull));
             buttonPlaceType=true;
         }
         if (latLng.getText().toString().equals("")){
-            latLng.setError("Not null");
+            latLng.setError(getString(R.string.notnull));
             buttonLatLng=true;
         }
         if (buttonTitles||buttonPlacename||buttonPlaceType||buttonLatLng){
@@ -579,7 +540,18 @@ public class GenQrActivity extends AppCompatActivity implements OnMapReadyCallba
 
         Intent i = new Intent(getApplicationContext(), GenQr2Activity.class);
         i.putExtra("img",byteArray);
-        startActivity(i);
+        startActivityForResult(i,1);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(resultCode == RESULT_OK){
+            latLng.setText(data.getStringExtra("latLng"));
+        }
+        if(resultCode == 0){
+            finish();
+        }
+
     }
 
 

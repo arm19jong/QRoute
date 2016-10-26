@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        buttonToRead.setEnabled(false);
+        //buttonToRead.setEnabled(false);
         buttonToRoute.setEnabled(false);
 
     }

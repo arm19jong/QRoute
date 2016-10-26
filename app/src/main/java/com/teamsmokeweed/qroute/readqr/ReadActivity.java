@@ -1,7 +1,9 @@
 package com.teamsmokeweed.qroute.readqr;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -40,7 +42,29 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
         super.onCreate(state);
         setContentView(R.layout.read_qr);
 
-
+//        Dexter.initialize(ReadActivity.this);
+//        Dexter.checkPermission(new PermissionListener() {
+//            @Override
+//            public void onPermissionGranted(PermissionGrantedResponse response) {/* ... */}
+//
+//            @Override
+//            public void onPermissionDenied(PermissionDeniedResponse response) {finish();}
+//
+//            @Override
+//            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+//
+//
+//                // ask permission once time
+//                //token.cancelPermissionRequest();
+//
+//                // request permission when call method again
+//                //token.continuePermissionRequest();
+//
+//
+//
+//
+//            }
+//        }, Manifest.permission.CAMERA);
 
         //setupToolbar();
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
@@ -70,8 +94,8 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result rawResult) {
-        Toast.makeText(this, "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Contents = " + rawResult.getText() +
+//                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
 
         String[] sQr = rawResult.getText().split("#420#");
@@ -145,7 +169,7 @@ public class ReadActivity  extends AppCompatActivity implements ZXingScannerView
                 tradeMarkTop = 10;
                 tradeMarkLeft = canvas.getHeight() - PAINT.getTextSize() - 10;
             }
-            canvas.drawText(TRADE_MARK_TEXT, tradeMarkLeft, tradeMarkTop, PAINT);
+            //canvas.drawText(TRADE_MARK_TEXT, tradeMarkLeft, tradeMarkTop, PAINT);
         }
     }
 

@@ -9,11 +9,19 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.googledirection.DirectionCallback;
 import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.constant.Language;
 import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Info;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.model.Step;
 import com.akexorcist.googledirection.util.DirectionConverter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -21,6 +29,7 @@ import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -28,9 +37,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jongzazaal on 15/10/2559.
@@ -46,6 +59,7 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
     int check_navi;
     LatLng latLng;
 
+    TextView ddd, ggg;
     //FragmentTransaction fragmentTransaction;
 
     @Override
@@ -64,6 +78,8 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
 
+        ddd=(TextView) findViewById(R.id.ddd);
+        ggg=(TextView) findViewById(R.id.ggg);
 
 //        mMap = ((SupportMapFragment)getSupportFragmentManager()
 //                .findFragmentById(R.id.fragment_map_container)).getMap();
@@ -72,6 +88,9 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
                 .build();
 
 
@@ -81,6 +100,13 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
     public void onMapReady(final GoogleMap googleMap) {
         // Do something with Google Map
         this.googleMap = googleMap;
+
+        //this.googleMap.getUiSettings().setMapToolbarEnabled(true);
+        //this.googleMap.getUiSettings().setCompassEnabled(true);
+        //this.googleMap.setTrafficEnabled(true);
+        //this.googleMap.set
+        this.googleMap.setBuildingsEnabled(true);
+        this.googleMap.getProjection();
 
 
     }
@@ -111,21 +137,63 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
         GoogleDirection.withServerKey(serverKey)
                 .from(origin)
                 .to(destination)
+                .language(Language.THAI)
                 .execute(new DirectionCallback() {
                     @Override
                     public void onDirectionSuccess(Direction direction, String rawBody) {
                         // Do something here
-                        showToast("Success");
+                        //showToast("Success");
 
                         //googleMap.make(btnRequestDirection, "Success with status : " + direction.getStatus(), Snackbar.LENGTH_SHORT).show();
+//                        if (direction.isOK()) {
+//                            googleMap.addMarker(new MarkerOptions().position(origin));
+//                            googleMap.addMarker(new MarkerOptions().position(destination));
+//
+//                            ArrayList<LatLng> directionPositionList = direction.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
+//                            googleMap.addPolyline(DirectionConverter.createPolyline(getApplicationContext(), directionPositionList, 5, Color.RED));
+//
+//                            showToast(rawBody);
+//                        }
                         if (direction.isOK()) {
-                            googleMap.addMarker(new MarkerOptions().position(origin));
-                            googleMap.addMarker(new MarkerOptions().position(destination));
 
-                            ArrayList<LatLng> directionPositionList = direction.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
-                            googleMap.addPolyline(DirectionConverter.createPolyline(getApplicationContext(), directionPositionList, 5, Color.RED));
+                            Route route = direction.getRouteList().get(0);
+                            Leg leg = route.getLegList().get(0);
+                            List<Step> step = leg.getStepList();
 
-                            //btnRequestDirection.setVisibility(View.GONE);
+                            Info distanceInfo = leg.getDistance();
+                            Info durationInfo = leg.getDuration();
+                            String distance = distanceInfo.getText();
+                            String duration = durationInfo.getText();
+
+                            ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                            PolylineOptions polylineOptions = DirectionConverter.createPolyline(RouteMap.this, directionPositionList, 5, Color.RED);
+                            googleMap.addPolyline(polylineOptions);
+                            //showToast(distance+"//"+duration);
+                            ddd.setText("ถึงจุดหมายในอีก "+distance+"\n"+"ภายในเวลา "+duration);
+
+//                            Info distanceInfo = step.getDistance();
+//                            Info durationInfo = step.getDuration();
+//                            String distance = distanceInfo.getText();
+//                            String duration = durationInfo.getText();
+
+//                            String maneuver = step.getManeuver();
+//                            String instruction = step.getHtmlInstruction();
+
+                            String s = "";
+                            String s2 = "";
+                            for (Step step1: step){
+                                s += step1.getDistance().getText()+"//"+step1.getDuration().getText()+
+                                        step1.getManeuver()+"ppppp"+step1.getHtmlInstruction()+
+                                        "\n";
+                                s2+=step1.getHtmlInstruction();
+                            }
+                            //showToast(s);
+                            ggg.setText(Html.fromHtml(s2));
+
+
+
+
+
                         }
                     }
 
@@ -224,9 +292,7 @@ public class RouteMap extends FragmentActivity implements OnMapReadyCallback, Go
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 coordinate, 16));
 
-        navigator(coordinate, 1);
-
-
+        navigator(coordinate, 0);
 
 
     }

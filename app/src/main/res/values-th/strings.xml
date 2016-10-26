@@ -6,9 +6,9 @@
     <string name="open_location_settings">Open location settings</string>
     <string name="Cancel">Cancel</string>
     <string name="facebook_app_id">1282369891784557</string>
-    <string name="Create_New_Location">Create New Location</string>
-    <string name="recent">Recent</string>
-    <string name="read_from_qr">Read From QR</string>
+    <string name="Create_New_Location">สร้างตำแหน่งใหม่</string>
+    <string name="recent">ที่มีอยู่แล้ว</string>
+    <string name="read_from_qr">อ่านจาก Qr</string>
     <string name="create_new_location">Create new location</string>
     <string name="location_info_qr_code">Location info QR Code</string>
     <string name="place_name">[Place name]</string>
@@ -25,7 +25,4 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="regenerate_qr_code">Regenerate QR code</string>
-    <string name="location">Location</string>
-    <string name="done">Done</string>
-    <string name="notnull">This field can\'t be empty!</string>
 </resources>

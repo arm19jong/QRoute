@@ -103,6 +103,7 @@ public class ResultReadQrActivity  extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        imgRoute.setEnabled(false);
 
         reGenQr.setOnClickListener(new View.OnClickListener() {
             @Override

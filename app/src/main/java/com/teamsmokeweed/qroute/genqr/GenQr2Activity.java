@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
@@ -42,6 +43,7 @@ public class GenQr2Activity extends AppCompatActivity {
     ImageView imageView;
     Button saveButton, shareButton;
     Bitmap bitmap;
+    TextView home;
     private ShareButton shareButtonFB;
     private int counter = 0;
     @Override
@@ -51,6 +53,8 @@ public class GenQr2Activity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.gen_qr2);
+
+        home = (TextView) findViewById(R.id.home);
 
         shareButtonFB = (ShareButton) findViewById(R.id.share_btn);
         shareButtonFB.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +153,15 @@ public class GenQr2Activity extends AppCompatActivity {
                 startActivity(Intent.createChooser(share, "Select"));
             }
         });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                setResult(0,returnIntent);
+                finish();
+            }
+        });
     }
     @Override
     public void onStart() {
@@ -166,6 +179,8 @@ public class GenQr2Activity extends AppCompatActivity {
     @Subscribe
     public void OnBackButtonClicked(BlackButtonClicked blackButtonClicked)
     {
+        Intent returnIntent = new Intent();
+        setResult(1,returnIntent);
         finish();
     }
 

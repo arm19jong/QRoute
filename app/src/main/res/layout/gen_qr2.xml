@@ -6,18 +6,19 @@
     <com.teamsmokeweed.qroute.bar.BarGenQrS
         android:id="@+id/barGenQr2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/here_is_your_qr"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:textColor="#4CAF50"
         android:layout_below="@id/barGenQr2"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         />
     <ImageView
         android:id="@+id/imgQrGen"
@@ -25,7 +26,7 @@
         android:layout_height="260dp"
         android:layout_below="@id/text"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="8dp"
         />
 
 
@@ -38,9 +39,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
+
         android:layout_below="@+id/imgQrGen"
         android:layout_alignLeft="@+id/text"
-        android:layout_alignStart="@+id/text">
+        android:layout_alignStart="@+id/text"
+
+        android:layout_marginLeft="32dp">
         <Button
             android:id="@+id/shareB"
             android:layout_width="48dp"
@@ -67,7 +71,9 @@
         android:orientation="vertical"
         android:layout_below="@+id/imgQrGen"
         android:layout_alignRight="@+id/text"
-        android:layout_alignEnd="@+id/text">
+        android:layout_alignEnd="@+id/text"
+        android:layout_marginRight="32dp"
+        >
         <Button
             android:id="@+id/save"
             android:layout_width="48dp"
@@ -92,6 +98,17 @@
         android:contentDescription="Shareeeee"
         android:layout_below="@id/imgQrGen"
         android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/done"
+        android:layout_alignParentBottom="true"
+        android:background="#4CAF50"
+        android:textColor="#fff"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="24sp"
         />
 
 </RelativeLayout>

@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Splash"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,6 +44,7 @@
         <activity android:name=".database.ViewGenQr"></activity>
         <activity android:name=".database.GenRecycleviewActivity"></activity>
         <activity android:name=".genqr.GenQr2Activity"></activity>
+        <activity android:name=".genqr.GenQrMapActivity"></activity>
 
 
         <meta-data
